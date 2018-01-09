@@ -2,6 +2,6 @@ apply plugin: 'kotlin-platform-js'
 
 dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib-js:$kotlin_version"
-    expectedBy project(":")
+    expectedBy project(":collection-common")
     testCompile "org.jetbrains.kotlin:kotlin-test-js:$kotlin_version"
 }

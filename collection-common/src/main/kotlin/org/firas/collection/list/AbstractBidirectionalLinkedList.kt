@@ -3,8 +3,8 @@ package org.firas.collection.list
 /**
  *
  */
-abstract class AbstractLinkedList<E>
-        protected constructor(protected var head: LinkedListNode<E>? = null) :
+abstract class AbstractBidirectionalLinkedList<E>
+        protected constructor(protected var head: BidirectionalLinkedListNode<E>? = null) :
         LinkedListBase<E>() {
 
     override fun isEmpty(): Boolean {

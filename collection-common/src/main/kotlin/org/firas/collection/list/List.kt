@@ -7,5 +7,5 @@ import org.firas.collection.Collection
  */
 interface List<E> : Collection<E> {
 
-    fun get(index: Int): E?
+    fun get(index: Int): E
 }

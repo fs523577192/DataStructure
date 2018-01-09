@@ -9,14 +9,6 @@ class ArrayList<E>(initialCapacity: Int = 10) : AbstractList<E>() {
     private var size: Int = 0
     private var array = arrayOfNulls<E>(initialCapacity)
 
-    override fun get(index: Int): E? {
-        ensureNonNegativeIndex(index)
-        if (index >= size) {
-            throw kotlin.IndexOutOfBoundsException()
-        }
-        return array[index]
-    }
-
     override fun isEmpty(): Boolean {
         return 0 == size
     }
@@ -25,12 +17,20 @@ class ArrayList<E>(initialCapacity: Int = 10) : AbstractList<E>() {
         return size
     }
 
-    override fun set(index: Int, element: E?) {
+    override fun get(index: Int): E {
+        ensureNonNegativeIndex(index)
+        if (index >= size) {
+            throw IndexOutOfBoundsException()
+        }
+        return checkNotNull(array[index])
+    }
+
+    override fun set(index: Int, element: E) {
         if (index < 0) {
-            throw kotlin.IllegalArgumentException()
+            throw IllegalArgumentException()
         }
         if (index >= size) {
-            throw kotlin.IndexOutOfBoundsException()
+            throw IndexOutOfBoundsException()
         }
         array[index] = element
     }
