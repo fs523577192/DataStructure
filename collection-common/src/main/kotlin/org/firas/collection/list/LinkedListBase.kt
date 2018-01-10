@@ -56,6 +56,4 @@ abstract class LinkedListBase<E> : AbstractList<E>() {
         }
         return node
     }
-
-    protected var modifyCount = 0
 }

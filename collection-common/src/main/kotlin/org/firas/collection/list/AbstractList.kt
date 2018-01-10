@@ -10,4 +10,6 @@ abstract class AbstractList<E> : MutableList<E> {
             throw IllegalArgumentException()
         }
     }
+
+    protected var modifyCount = 0
 }

@@ -3,7 +3,7 @@ package org.firas.collection.queue
 /**
  *
  */
-interface ProducerInQueu<E> {
+interface ProducerInQueue<E> {
 
     fun produce(element: E)
 }
