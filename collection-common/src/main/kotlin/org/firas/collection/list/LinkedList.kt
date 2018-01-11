@@ -29,6 +29,16 @@ class LinkedList<E> private constructor(head: LinkedListNode<E>? = null) :
     }
 
     override fun append(element: E) {
+        modifyCount += 1
+        if (null == head) {
+            head = LinkedListNode(null, element)
+            return
+        }
+        var node = head
+        while (null != node?.next) {
+            node = node.next
+        }
+        node?.next = LinkedListNode(null, element)
     }
 
     override fun remove(index: Int): E {

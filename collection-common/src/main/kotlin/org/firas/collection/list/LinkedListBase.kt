@@ -18,13 +18,14 @@ abstract class LinkedListBase<E> : AbstractList<E>(), Stack<E> {
             var element: E) :
             LinkedListNodeBase<E, BidirectionalLinkedListNode<E>>(next) {
 
-        fun afterInsert() {
+        fun afterInsert(): BidirectionalLinkedListNode<E> {
             if (null != next) {
                 next?.prev = this
             }
             if (null != prev) {
                 prev?.next = this
             }
+            return this
         }
     }
 

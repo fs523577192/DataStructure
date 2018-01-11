@@ -6,7 +6,7 @@ import org.firas.collection.Iterator
  *
  */
 class BidirectionalLinkedList<E> private constructor(head: BidirectionalLinkedListNode<E>? = null) :
-        AbstractBidirectionalLinkedList<E>(head), Stack<E> {
+        AbstractBidirectionalLinkedList<E>(head) {
 
     override fun size(): Int {
         return size(head)
@@ -23,7 +23,7 @@ class BidirectionalLinkedList<E> private constructor(head: BidirectionalLinkedLi
     override fun insert(index: Int, element: E) {
         ensureNonNegativeIndex(index)
         if (0 == index) {
-            append(element)
+            push(element)
             return
         }
         val node = getNodeByIndex(head, index - 1)
@@ -36,6 +36,18 @@ class BidirectionalLinkedList<E> private constructor(head: BidirectionalLinkedLi
     }
 
     override fun append(element: E) {
+        modifyCount += 1
+        if (null == head) {
+            head = BidirectionalLinkedListNode(null, null, element)
+            return
+        }
+        var node = head
+        while (null != node?.next) {
+            node = node.next
+        }
+        val newNode = BidirectionalLinkedListNode(node.next, node, element)
+        node?.next = newNode
+        newNode.prev = node
     }
 
     override fun remove(index: Int): E {
@@ -46,7 +58,12 @@ class BidirectionalLinkedList<E> private constructor(head: BidirectionalLinkedLi
         val node = getNodeByIndex(head, index)
         modifyCount += 1
         val result = checkNotNull(node?.element)
-        node.afterInsert()
+        if (null != node.prev) {
+            node.prev?.next = node.next
+        }
+        if (null != node.next) {
+            node.next?.prev = node.prev
+        }
         return result
     }
 
