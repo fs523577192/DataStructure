@@ -1,9 +1,11 @@
 package org.firas.collection.list
 
+import org.firas.collection.stack.Stack
+
 /**
  *
  */
-abstract class LinkedListBase<E> : AbstractList<E>() {
+abstract class LinkedListBase<E> : AbstractList<E>(), Stack<E> {
 
     protected abstract class LinkedListNodeBase<E, T: LinkedListNodeBase<E, T>>(var next: T?)
 
@@ -14,7 +16,17 @@ abstract class LinkedListBase<E> : AbstractList<E>() {
             next: BidirectionalLinkedListNode<E>?,
             var prev: BidirectionalLinkedListNode<E>?,
             var element: E) :
-            LinkedListNodeBase<E, BidirectionalLinkedListNode<E>>(next)
+            LinkedListNodeBase<E, BidirectionalLinkedListNode<E>>(next) {
+
+        fun afterInsert() {
+            if (null != next) {
+                next?.prev = this
+            }
+            if (null != prev) {
+                prev?.next = this
+            }
+        }
+    }
 
     protected fun <T: LinkedListNodeBase<E, T>> size(head: LinkedListNodeBase<E, T>?): Int {
         var result = 0
@@ -46,8 +58,8 @@ abstract class LinkedListBase<E> : AbstractList<E>() {
             throw IndexOutOfBoundsException()
         }
         var i = index
-        var node = head?.next
-        while (i > 1 && head != node) {
+        var node = head
+        while (i > 0 && null != node) {
             i -= 1
             node = node?.next
         }
@@ -55,5 +67,33 @@ abstract class LinkedListBase<E> : AbstractList<E>() {
             throw IndexOutOfBoundsException()
         }
         return node
+    }
+
+    protected fun <T: LinkedListNodeBase<E, T>> getNodeByIndexForCircular(
+            head: T?, index: Int): T {
+        ensureNonNegativeIndex(index)
+        if (isEmpty()) {
+            throw IndexOutOfBoundsException()
+        }
+        if (0 == index) {
+            return checkNotNull(head)
+        }
+        var i = index
+        var node = head?.next
+        while (i > 1 && head != node) {
+            i -= 1
+            node = node?.next
+        }
+        if (head == node) {
+            throw IndexOutOfBoundsException()
+        }
+        return checkNotNull(node)
+    }
+
+    protected fun <T: LinkedListNodeBase<E, T>> ensureNotEmpty(
+            head: T?) {
+        if (null == head) {
+            throw Exception("Empty")
+        }
     }
 }

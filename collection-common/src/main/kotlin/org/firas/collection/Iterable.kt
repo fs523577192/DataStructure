@@ -3,7 +3,7 @@ package org.firas.collection
 /**
  *
  */
-interface Iterable<E> {
+interface Iterable<out E> {
 
     fun iterator(): org.firas.collection.Iterator<E>
 }

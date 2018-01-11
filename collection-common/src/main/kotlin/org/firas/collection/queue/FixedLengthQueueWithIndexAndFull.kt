@@ -1,10 +1,10 @@
-package org.firas.datatype.queue
+package org.firas.collection.queue
 
-class FixedLengthQueueWithIndex<E>(length: Int) : AbstractFixedLengthQueueWithIndex<E>(length, 0) {
+class FixedLengthQueueWithIndexAndFull<E>(length: Int) : AbstractFixedLengthQueueWithIndex<E>(length, 0) {
 
     private var full = false
 
-    fun size() {
+    override fun size(): Int {
         if (full) {
             return array.size
         }
@@ -14,7 +14,7 @@ class FixedLengthQueueWithIndex<E>(length: Int) : AbstractFixedLengthQueueWithIn
         return exitIndex - entryIndex
     }
 
-    fun produce(element: E) {
+    override fun produce(element: E) {
         if (full) {
             throw Exception("Full")
         }
@@ -28,8 +28,8 @@ class FixedLengthQueueWithIndex<E>(length: Int) : AbstractFixedLengthQueueWithIn
         }
     }
 
-    fun consume(): E {
-        val result = checkNotNull(array[exitIndex])
+    override fun consume(): E {
+        val result = elementData(exitIndex)
         exitIndex += 1
         if (exitIndex >= array.size) {
             exitIndex = 0

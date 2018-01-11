@@ -16,7 +16,7 @@ abstract class AbstractBidirectionalLinkedList<E>
     }
 
     override fun set(index: Int, element: E) {
-        getNodeByIndex(head, index).element = element
         modifyCount += 1
+        getNodeByIndex(head, index).element = element
     }
 }

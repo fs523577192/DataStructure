@@ -1,30 +1,30 @@
-package org.firas.datatype.stack
+package org.firas.collection.stack
 
 /**
  *
  */
 class FixedLengthStack<E>(length: Int) : Stack<E> {
 
-    private val array = arrayOfNulls<E>(length)
+    private val array = arrayOfNulls<Any>(length)
     private var size = 0
 
-    fun size(): Int {
+    override fun size(): Int {
         return size
     }
 
-    fun push(element: E) {
+    override fun push(element: E) {
         if (size >= array.size) {
-            throw Exception()
+            throw Exception("Full")
         }
         array[size] = element
         size += 1
     }
 
-    fun pop(): E {
+    override fun pop(): E {
         if (size <= 0) {
-            throw Exception()
+            throw Exception("Empty")
         }
         size -= 1
-        return checkNotNull(array[size])
+        return (array[size] as E)
     }
 }
