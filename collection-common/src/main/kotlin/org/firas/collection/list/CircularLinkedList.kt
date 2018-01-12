@@ -5,7 +5,7 @@ import org.firas.collection.Iterator
 /**
  *
  */
-class CircularLinkedList<E> private constructor(head: LinkedListNode<E>? = null) :
+class CircularLinkedList<E: Any?> private constructor(head: LinkedListNode<E>? = null) :
         AbstractLinkedList<E>(head) {
 
     override fun size(): Int {
@@ -23,7 +23,7 @@ class CircularLinkedList<E> private constructor(head: LinkedListNode<E>? = null)
             while (original != node?.next) {
                 node = node?.next
             }
-            node?.next = head
+            node.next = head
         }
     }
 
@@ -65,13 +65,13 @@ class CircularLinkedList<E> private constructor(head: LinkedListNode<E>? = null)
         }
         modifyCount += 1
         prev.next = node?.next
-        return checkNotNull(node?.element)
+        return (node?.element as E)
     }
 
     override fun pop(): E {
         ensureNotEmpty(head)
         modifyCount += 1
-        val result = checkNotNull(head?.element)
+        val result = (head?.element as E)
         if (head == head?.next) {
             head = null
             return result
@@ -100,7 +100,7 @@ class CircularLinkedList<E> private constructor(head: LinkedListNode<E>? = null)
 
         override fun next(): E {
             checkForComodification()
-            val result = checkNotNull(currentNode?.element)
+            val result = (currentNode?.element as E)
             currentNode = currentNode?.next
             return result
         }

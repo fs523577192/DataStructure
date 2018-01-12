@@ -5,7 +5,7 @@ import org.firas.collection.Iterator
 /**
  *
  */
-class CircularBidirectionalLinkedList<E> private constructor(head: BidirectionalLinkedListNode<E>? = null) :
+class CircularBidirectionalLinkedList<E: Any?> private constructor(head: BidirectionalLinkedListNode<E>? = null) :
         AbstractBidirectionalLinkedList<E>(head) {
 
     override fun size(): Int {
@@ -66,7 +66,7 @@ class CircularBidirectionalLinkedList<E> private constructor(head: Bidirectional
     override fun pop(): E {
         ensureNotEmpty(head)
         modifyCount += 1
-        val result = checkNotNull(head?.element)
+        val result = (head?.element as E)
         if (head == head?.next) {
             head = null
             return result
@@ -87,7 +87,8 @@ class CircularBidirectionalLinkedList<E> private constructor(head: Bidirectional
     }
 
     private inner open class LinkedListIterator(
-            var currentNode: LinkedListNode<E>? = head): AbstractListIterator() {
+            var currentNode: BidirectionalLinkedListNode<E>? = head):
+            AbstractListIterator() {
 
         override fun hasNext(): Boolean {
             checkForComodification()
@@ -96,7 +97,7 @@ class CircularBidirectionalLinkedList<E> private constructor(head: Bidirectional
 
         override fun next(): E {
             checkForComodification()
-            val result = checkNotNull(currentNode?.element)
+            val result = (currentNode?.element as E)
             currentNode = currentNode?.next
             return result
         }

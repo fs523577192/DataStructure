@@ -3,7 +3,7 @@ package org.firas.collection
 /**
  *
  */
-interface Iterator<out E> {
+interface Iterator<out E: Any?> {
 
     fun hasNext(): Boolean
 

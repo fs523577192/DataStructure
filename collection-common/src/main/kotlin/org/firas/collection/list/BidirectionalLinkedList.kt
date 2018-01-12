@@ -5,7 +5,7 @@ import org.firas.collection.Iterator
 /**
  *
  */
-class BidirectionalLinkedList<E> private constructor(head: BidirectionalLinkedListNode<E>? = null) :
+class BidirectionalLinkedList<E: Any?> private constructor(head: BidirectionalLinkedListNode<E>? = null) :
         AbstractBidirectionalLinkedList<E>(head) {
 
     override fun size(): Int {
@@ -45,7 +45,7 @@ class BidirectionalLinkedList<E> private constructor(head: BidirectionalLinkedLi
         while (null != node?.next) {
             node = node.next
         }
-        val newNode = BidirectionalLinkedListNode(node.next, node, element)
+        val newNode = BidirectionalLinkedListNode(node?.next, node, element)
         node?.next = newNode
         newNode.prev = node
     }
@@ -57,7 +57,7 @@ class BidirectionalLinkedList<E> private constructor(head: BidirectionalLinkedLi
         }
         val node = getNodeByIndex(head, index)
         modifyCount += 1
-        val result = checkNotNull(node?.element)
+        val result = node.element
         if (null != node.prev) {
             node.prev?.next = node.next
         }
@@ -70,7 +70,7 @@ class BidirectionalLinkedList<E> private constructor(head: BidirectionalLinkedLi
     override fun pop(): E {
         ensureNotEmpty(head)
         modifyCount += 1
-        val result = checkNotNull(head?.element)
+        val result = (head?.element as E)
         head = head?.next
         if (null != head) {
             head?.prev = null
@@ -93,7 +93,7 @@ class BidirectionalLinkedList<E> private constructor(head: BidirectionalLinkedLi
 
         override fun next(): E {
             checkForComodification()
-            val result = checkNotNull(currentNode?.element)
+            val result = (currentNode?.element as E)
             currentNode = currentNode?.next
             return result
         }

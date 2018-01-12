@@ -3,7 +3,7 @@ package org.firas.collection.stack
 /**
  *
  */
-interface ConsumerInStack<E> {
+interface ConsumerInStack<out E: Any?> {
 
     fun pop(): E
 }

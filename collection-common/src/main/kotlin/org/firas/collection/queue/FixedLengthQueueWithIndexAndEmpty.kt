@@ -1,6 +1,6 @@
 package org.firas.collection.queue
 
-class FixedLengthQueueWithIndexAndEmpty<E>(length: Int) : AbstractFixedLengthQueueWithIndex<E>(length, 0) {
+class FixedLengthQueueWithIndexAndEmpty<E: Any?>(length: Int) : AbstractFixedLengthQueueWithIndex<E>(length, 0) {
 
     private var empty = true
 
@@ -28,7 +28,7 @@ class FixedLengthQueueWithIndexAndEmpty<E>(length: Int) : AbstractFixedLengthQue
 
     override fun consume(): E {
         if (-1 == exitIndex) {
-            throw Exception("Empty")
+            throw org.firas.collection.exception.NoSuchElementException("Empty Queue")
         }
         val result = elementData(exitIndex)
         exitIndex += 1

@@ -1,21 +1,21 @@
 package org.firas.collection.queue
 
-class FixedLengthQueueWithIndexAndSize<E>(length: Int) : AbstractFixedLengthQueueWithSize<E>(length) {
+class FixedLengthQueueWithIndexAndSize<E: Any?>(length: Int) : AbstractFixedLengthQueueWithSize<E>(length) {
 
     private var exitIndex = 0
 
     override fun size(): Int {
-        return size
+        return _size
     }
 
     override fun produce(element: E) {
         checkFull()
-        var index = exitIndex + size
+        var index = exitIndex + _size
         if (index > array.size) {
             index -= array.size
         }
         array[index] = element
-        size += 1
+        _size += 1
     }
 
     override fun consume(): E {

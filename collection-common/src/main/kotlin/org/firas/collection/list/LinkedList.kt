@@ -5,7 +5,7 @@ import org.firas.collection.Iterator
 /**
  *
  */
-class LinkedList<E> private constructor(head: LinkedListNode<E>? = null) :
+class LinkedList<E: Any?> private constructor(head: LinkedListNode<E>? = null) :
         AbstractLinkedList<E>(head) {
 
     override fun size(): Int {
@@ -56,7 +56,7 @@ class LinkedList<E> private constructor(head: LinkedListNode<E>? = null) :
     override fun pop(): E {
         ensureNotEmpty(head)
         modifyCount += 1
-        val result = checkNotNull(head?.element)
+        val result = (head?.element as E)
         head = head?.next
         return result
     }
@@ -75,7 +75,7 @@ class LinkedList<E> private constructor(head: LinkedListNode<E>? = null) :
 
         override fun next(): E {
             checkForComodification()
-            val result = checkNotNull(currentNode?.element)
+            val result = (currentNode?.element as E)
             currentNode = currentNode?.next
             return result
         }

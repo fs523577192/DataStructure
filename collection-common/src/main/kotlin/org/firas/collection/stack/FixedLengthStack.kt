@@ -3,7 +3,7 @@ package org.firas.collection.stack
 /**
  *
  */
-class FixedLengthStack<E>(length: Int) : Stack<E> {
+class FixedLengthStack<E: Any?>(length: Int) : Stack<E> {
 
     private val array = arrayOfNulls<Any>(length)
     private var size = 0
@@ -22,7 +22,7 @@ class FixedLengthStack<E>(length: Int) : Stack<E> {
 
     override fun pop(): E {
         if (size <= 0) {
-            throw Exception("Empty")
+            throw org.firas.collection.exception.NoSuchElementException("Empty Stack")
         }
         size -= 1
         return (array[size] as E)

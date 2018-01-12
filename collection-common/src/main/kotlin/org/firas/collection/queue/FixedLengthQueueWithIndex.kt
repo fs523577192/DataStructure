@@ -27,7 +27,7 @@ class FixedLengthQueueWithIndex<E>(length: Int) : AbstractFixedLengthQueueWithIn
 
     override fun consume(): E {
         if (-1 == exitIndex) {
-            throw Exception("Empty")
+            throw org.firas.collection.exception.NoSuchElementException("Empty Stack")
         }
         val result = elementData(exitIndex)
         exitIndex += 1

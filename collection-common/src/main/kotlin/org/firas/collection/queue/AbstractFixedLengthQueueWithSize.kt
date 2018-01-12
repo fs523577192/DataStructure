@@ -1,22 +1,23 @@
 package org.firas.collection.queue
 
-abstract class AbstractFixedLengthQueueWithSize<E>(length: Int) : FixedLengthQueue<E>(length) {
+abstract class AbstractFixedLengthQueueWithSize<E: Any?>(length: Int):
+        FixedLengthQueue<E>(length) {
 
-    protected var size = 0
+    protected var _size = 0
 
     override fun size(): Int {
-        return size
+        return _size
     }
 
     protected fun checkFull() {
-        if (size >= array.size) {
+        if (_size >= array.size) {
             throw Exception("Full")
         }
     }
 
     protected fun checkEmpty() {
-        if (size <= 0) {
-            throw Exception("Empty")
+        if (_size <= 0) {
+            throw org.firas.collection.exception.NoSuchElementException("Empty Queue")
         }
     }
 }

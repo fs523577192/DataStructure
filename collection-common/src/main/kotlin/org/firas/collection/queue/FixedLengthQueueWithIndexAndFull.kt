@@ -1,6 +1,6 @@
 package org.firas.collection.queue
 
-class FixedLengthQueueWithIndexAndFull<E>(length: Int) : AbstractFixedLengthQueueWithIndex<E>(length, 0) {
+class FixedLengthQueueWithIndexAndFull<E: Any?>(length: Int) : AbstractFixedLengthQueueWithIndex<E>(length, 0) {
 
     private var full = false
 

@@ -5,7 +5,7 @@ import org.firas.collection.stack.Stack
 /**
  *
  */
-abstract class LinkedListBase<E> : AbstractList<E>(), Stack<E> {
+abstract class LinkedListBase<E: Any?> : AbstractList<E>(), Stack<E> {
 
     protected abstract class LinkedListNodeBase<E, T: LinkedListNodeBase<E, T>>(var next: T?)
 
@@ -62,7 +62,7 @@ abstract class LinkedListBase<E> : AbstractList<E>(), Stack<E> {
         var node = head
         while (i > 0 && null != node) {
             i -= 1
-            node = node?.next
+            node = node.next
         }
         if (null == node) {
             throw IndexOutOfBoundsException()
@@ -94,7 +94,7 @@ abstract class LinkedListBase<E> : AbstractList<E>(), Stack<E> {
     protected fun <T: LinkedListNodeBase<E, T>> ensureNotEmpty(
             head: T?) {
         if (null == head) {
-            throw Exception("Empty")
+            throw org.firas.collection.exception.NoSuchElementException("Empty List")
         }
     }
 }
