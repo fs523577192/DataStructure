@@ -1,10 +1,12 @@
 package org.firas.collection.tree
 
-class RedBlackTree<E: Any?>(protected var root: RedBlackTreeNode<E>): BinaryTree<E>() {
+class RedBlackTree<E: Any?>(): BinaryTree<E>() {
 
-    protected class RedBlackTreeNode<E>(
-            var left: RedBlackTreeNode<E>?,
-            var right: RedBlackTreeNode<E>?,
+    private var root: RedBlackTreeNode<E>? = null
+
+    private class RedBlackTreeNode<E>(
+            left: RedBlackTreeNode<E>?,
+            right: RedBlackTreeNode<E>?,
             var isBlack: Boolean,
             var element: E): BinaryTreeNode<E, RedBlackTreeNode<E>>(left, right)
 }
