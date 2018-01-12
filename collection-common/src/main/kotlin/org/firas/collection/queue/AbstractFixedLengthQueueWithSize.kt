@@ -17,7 +17,7 @@ abstract class AbstractFixedLengthQueueWithSize<E: Any?>(length: Int):
 
     protected fun checkEmpty() {
         if (_size <= 0) {
-            throw org.firas.collection.exception.NoSuchElementException("Empty Queue")
+            throw NoSuchElementException("Empty Queue")
         }
     }
 }

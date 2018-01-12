@@ -22,7 +22,7 @@ class FixedLengthStack<E: Any?>(length: Int) : Stack<E> {
 
     override fun pop(): E {
         if (size <= 0) {
-            throw org.firas.collection.exception.NoSuchElementException("Empty Stack")
+            throw NoSuchElementException("Empty Stack")
         }
         size -= 1
         return (array[size] as E)

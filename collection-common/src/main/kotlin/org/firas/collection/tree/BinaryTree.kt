@@ -1,7 +1,5 @@
 package org.firas.collection.tree
 
-import org.firas.collection.exception.NoSuchElementException
-
 abstract class BinaryTree<E> {
 
     protected abstract class BinaryTreeNode<E, T: BinaryTreeNode<E, T>>(

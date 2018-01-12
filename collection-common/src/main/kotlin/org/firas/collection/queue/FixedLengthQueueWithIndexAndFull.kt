@@ -29,6 +29,9 @@ class FixedLengthQueueWithIndexAndFull<E: Any?>(length: Int) : AbstractFixedLeng
     }
 
     override fun consume(): E {
+        if (!full && exitIndex == entryIndex) {
+            throw NoSuchElementException("Empty Queue")
+        }
         val result = elementData(exitIndex)
         exitIndex += 1
         if (exitIndex >= array.size) {

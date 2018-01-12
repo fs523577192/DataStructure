@@ -94,7 +94,7 @@ abstract class LinkedListBase<E: Any?> : AbstractList<E>(), Stack<E> {
     protected fun <T: LinkedListNodeBase<E, T>> ensureNotEmpty(
             head: T?) {
         if (null == head) {
-            throw org.firas.collection.exception.NoSuchElementException("Empty List")
+            throw NoSuchElementException("Empty List")
         }
     }
 }
