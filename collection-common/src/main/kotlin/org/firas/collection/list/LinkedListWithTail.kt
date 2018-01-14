@@ -5,11 +5,11 @@ import org.firas.collection.Iterator
 /**
  *
  */
-class LinkedList<E: Any?> private constructor(
-        head: LinkedListNode<E>?) :
-        AbstractLinkedList<E>(head) {
+class LinkedListWithTail<E: Any?> private constructor(
+        head: LinkedListNode<E>?, var tail: LinkedListNode<E>? = null) :
+        AbstractLinkedList<E>(head), org.firas.collection.queue.Queue<E> {
 
-    constructor(): this(null)
+    LinkedListWithTail(): this(null)
 
     override fun size(): Int {
         return size(head)
@@ -18,6 +18,9 @@ class LinkedList<E: Any?> private constructor(
     override fun push(element: E) {
         modifyCount += 1
         head = LinkedListNode(head, element)
+        if (null == head?.next) {
+            tail = head
+        }
     }
 
     override fun insert(index: Int, element: E) {
@@ -29,19 +32,25 @@ class LinkedList<E: Any?> private constructor(
         modifyCount += 1
         val node = getNodeByIndex(head, index - 1)
         node.next = LinkedListNode(node.next, element)
+        if (null == node.next?.next) {
+            tail = node.next?.next
+        }
     }
 
     override fun append(element: E) {
         modifyCount += 1
         if (null == head) {
             head = LinkedListNode(null, element)
+            tail = head
             return
         }
-        var node = head
-        while (null != node?.next) {
-            node = node.next
-        }
-        node?.next = LinkedListNode(null, element)
+        val newTail = LinkedListNode(null, element)
+        tail?.next = newTail
+        tail = newTail
+    }
+
+    override fun produce(element: E) {
+        append(element)
     }
 
     override fun remove(index: Int): E {
@@ -53,6 +62,9 @@ class LinkedList<E: Any?> private constructor(
         val node = prev.next ?: throw IndexOutOfBoundsException()
         modifyCount += 1
         prev.next = node.next
+        if (null == prev.next) {
+            tail = prev
+        }
         return node.element
     }
 
@@ -61,7 +73,14 @@ class LinkedList<E: Any?> private constructor(
         modifyCount += 1
         val result = (head?.element as E)
         head = head?.next
+        if (null == head) {
+            tail = null
+        }
         return result
+    }
+
+    override fun consume(): E {
+        return pop()
     }
 
     override fun iterator(): Iterator<E> {

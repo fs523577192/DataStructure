@@ -5,8 +5,12 @@ import org.firas.collection.Iterator
 /**
  *
  */
-class CircularBidirectionalLinkedList<E: Any?> private constructor(head: BidirectionalLinkedListNode<E>? = null) :
-        AbstractBidirectionalLinkedList<E>(head) {
+class CircularBidirectionalLinkedList<E: Any?> private constructor(
+        head: BidirectionalLinkedListNode<E>?) :
+        AbstractBidirectionalLinkedList<E>(head),
+        org.firas.collection.queue.Queue<E> {
+
+    constructor(): this(null)
 
     override fun size(): Int {
         return sizeForCircular(head)
@@ -22,6 +26,18 @@ class CircularBidirectionalLinkedList<E: Any?> private constructor(head: Bidirec
         } else {
             head = BidirectionalLinkedListNode(
                     original, original.prev, element).afterInsert()
+        }
+    }
+
+    override fun produce(element: E) {
+        modifyCount += 1
+        if (null == head) {
+            head = BidirectionalLinkedListNode(null, null, element)
+            head?.next = this.head
+            head?.prev = this.head
+        } else {
+            head?.prev = BidirectionalLinkedListNode(
+                    head, head.prev, element).afterInsert()
         }
     }
 
@@ -80,6 +96,10 @@ class CircularBidirectionalLinkedList<E: Any?> private constructor(head: Bidirec
         head = head?.next
         head?.prev = node
         return result
+    }
+
+    override fun consume(): E {
+        return pop()
     }
 
     override fun iterator(): Iterator<E> {
