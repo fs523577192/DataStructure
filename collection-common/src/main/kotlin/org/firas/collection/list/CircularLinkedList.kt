@@ -5,8 +5,10 @@ import org.firas.collection.Iterator
 /**
  *
  */
-class CircularLinkedList<E: Any?> private constructor(head: LinkedListNode<E>? = null) :
-        AbstractLinkedList<E>(head) {
+class CircularLinkedList<E: Any?> private constructor(
+        head: LinkedListNode<E>?): AbstractLinkedList<E>(head) {
+
+    constructor(): this(null)
 
     override fun size(): Int {
         return sizeForCircular(head)

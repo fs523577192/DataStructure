@@ -5,8 +5,11 @@ import org.firas.collection.Iterator
 /**
  *
  */
-class BidirectionalLinkedList<E: Any?> private constructor(head: BidirectionalLinkedListNode<E>? = null) :
+class BidirectionalLinkedList<E: Any?> private constructor(
+        head: BidirectionalLinkedListNode<E>?) :
         AbstractBidirectionalLinkedList<E>(head) {
+
+    constructor(): this(null)
 
     override fun size(): Int {
         return size(head)

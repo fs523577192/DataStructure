@@ -3,7 +3,10 @@ package org.firas.collection.list
 import org.firas.collection.Iterator
 
 /**
+ * Uni-directional Non-circular Linked List
  *
+ * Extra space: n + 1
+ * n "next" pointer + 1 "head" pointer
  */
 class LinkedList<E: Any?> private constructor(
         head: LinkedListNode<E>?) :
@@ -15,11 +18,21 @@ class LinkedList<E: Any?> private constructor(
         return size(head)
     }
 
+    /**
+     * Push an element into the stack
+     * Insert the element before the original head
+     * Worst Time: O(1)
+     * Extra space: 0
+     */
     override fun push(element: E) {
         modifyCount += 1
         head = LinkedListNode(head, element)
     }
 
+    /**
+     * Insert an element into the list
+     * Time: O(n)
+     */
     override fun insert(index: Int, element: E) {
         ensureNonNegativeIndex(index)
         if (0 == index) {
@@ -31,6 +44,10 @@ class LinkedList<E: Any?> private constructor(
         node.next = LinkedListNode(node.next, element)
     }
 
+    /**
+     * Append an element to the end of the list
+     * Time: O(n)
+     */
     override fun append(element: E) {
         modifyCount += 1
         if (null == head) {
@@ -44,6 +61,11 @@ class LinkedList<E: Any?> private constructor(
         node?.next = LinkedListNode(null, element)
     }
 
+    /**
+     * Remove the element at the specified index in the list
+     * @return the removed element
+     * Time: O(n)
+     */
     override fun remove(index: Int): E {
         ensureNonNegativeIndex(index)
         if (0 == index) {
@@ -56,6 +78,11 @@ class LinkedList<E: Any?> private constructor(
         return node.element
     }
 
+    /**
+     * Pop an element from the stack
+     * Worst Time: O(1)
+     * Extra Space: 1 (to store the element removed)
+     */
     override fun pop(): E {
         ensureNotEmpty(head)
         modifyCount += 1

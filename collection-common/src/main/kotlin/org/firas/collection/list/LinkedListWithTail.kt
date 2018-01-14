@@ -4,10 +4,14 @@ import org.firas.collection.Iterator
 
 /**
  *
+ * Extra Space: n + 2
+ * n "next" pointer, 1 "head" pointer, 1 "tail" pointer
  */
 class LinkedListWithTail<E: Any?> private constructor(
         head: LinkedListNode<E>?, var tail: LinkedListNode<E>? = null) :
-        AbstractLinkedList<E>(head), org.firas.collection.queue.Queue<E> {
+        AbstractLinkedList<E>(head),
+        org.firas.collection.stack.Stack<E>,
+        org.firas.collection.queue.Queue<E> {
 
     LinkedListWithTail(): this(null)
 
@@ -37,6 +41,10 @@ class LinkedListWithTail<E: Any?> private constructor(
         }
     }
 
+    /**
+     *
+     * Worst Time: O(1)
+     */
     override fun append(element: E) {
         modifyCount += 1
         if (null == head) {
@@ -68,6 +76,9 @@ class LinkedListWithTail<E: Any?> private constructor(
         return node.element
     }
 
+    /**
+     * Worst Time: O(1)
+     */
     override fun pop(): E {
         ensureNotEmpty(head)
         modifyCount += 1
@@ -79,6 +90,9 @@ class LinkedListWithTail<E: Any?> private constructor(
         return result
     }
 
+    /**
+     * Worst Time: O(1)
+     */
     override fun consume(): E {
         return pop()
     }
