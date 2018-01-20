@@ -5,7 +5,8 @@ import org.firas.collection.Iterator
 /**
  *
  */
-class ArrayList<E>(initialCapacity: Int = 10) : AbstractList<E>() {
+class ArrayList<E>(initialCapacity: Int = 10):
+        AbstractList<E>(), org.firas.collection.stack.Stack<E> {
 
     private var capacity: Int = initialCapacity
     private var size: Int = 0
@@ -34,6 +35,16 @@ class ArrayList<E>(initialCapacity: Int = 10) : AbstractList<E>() {
         ensureCapacity(size + 1)
         array[size] = element
         size += 1
+    }
+
+    override fun push(element: E) {
+        append(element);
+    }
+
+    override fun pop(): E {
+        modifyCount += 1
+        size -= 1
+        return array[size]
     }
 
     override fun insert(index: Int, element: E) {

@@ -14,4 +14,8 @@ interface List<E> : Collection<E> {
      * @throws IndexOutOfBoundsException if index >= _size()
      */
     fun get(index: Int): E
+
+    fun indexOf(element: E): Int
+
+    fun lastIndexOf(element: E): Int
 }
