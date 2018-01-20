@@ -14,6 +14,10 @@ class CircularLinkedList<E: Any?> private constructor(
         return sizeForCircular(head)
     }
 
+    override fun contains(element: E): Boolean {
+        return containsForCircular(head, element)
+    }
+
     override fun push(element: E) {
         modifyCount += 1
         val original = head

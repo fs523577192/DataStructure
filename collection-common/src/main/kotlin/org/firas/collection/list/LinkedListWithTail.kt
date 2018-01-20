@@ -19,6 +19,10 @@ class LinkedListWithTail<E: Any?> private constructor(
         return size(head)
     }
 
+    override fun contains(element: E): Boolean {
+        return contains(head, element)
+    }
+
     override fun push(element: E) {
         modifyCount += 1
         head = LinkedListNode(head, element)

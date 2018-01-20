@@ -18,6 +18,10 @@ class LinkedList<E: Any?> private constructor(
         return size(head)
     }
 
+    override fun contains(element: E): Boolean {
+        return contains(head, element)
+    }
+
     /**
      * Push an element into the stack
      * Insert the element before the original head

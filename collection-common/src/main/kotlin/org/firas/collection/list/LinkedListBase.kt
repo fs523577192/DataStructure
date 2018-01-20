@@ -29,6 +29,18 @@ abstract class LinkedListBase<E: Any?> : AbstractList<E>(), Stack<E> {
         }
     }
 
+    protected fun <T: LinkedListNodeBase<E, T>> contains(
+            head: LinkedListNodeBase<E, T>?, element: E): Int {
+        var node = head
+        while (null != node) {
+            if (null == element && null == node.element ||
+                    null != element && element.equals(node.element)) {
+                return true
+            }
+        }
+        return false
+    }
+
     protected fun <T: LinkedListNodeBase<E, T>> size(head: LinkedListNodeBase<E, T>?): Int {
         var result = 0
         var node = head
@@ -37,6 +49,25 @@ abstract class LinkedListBase<E: Any?> : AbstractList<E>(), Stack<E> {
             node = node.next
         }
         return result
+    }
+
+    protected fun <T: LinkedListNodeBase<E, T>> containsForCircular(
+            head: LinkedListNodeBase<E, T>?, element: E): Int {
+        if (null == head) {
+            return false
+        }
+        if (null == element && null == head.element ||
+                null != element && element.equals(head.element)) {
+            return true
+        }
+        var node = head.next
+        while (head != node) {
+            if (null == element && null == node.element ||
+                    null != element && element.equals(node.element)) {
+                return true
+            }
+        }
+        return false
     }
 
     protected fun <T: LinkedListNodeBase<E, T>> sizeForCircular(head: LinkedListNodeBase<E, T>?): Int {

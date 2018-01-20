@@ -20,6 +20,16 @@ class ArrayList<E>(initialCapacity: Int = 10):
         return size
     }
 
+    override fun contains(element: E): Boolean {
+        for (i in 0 .. (size - 1)) {
+            if (null == element && null == array[i] ||
+                    null != element && element.equals(array[i])) {
+                return true
+            }
+        }
+        return false
+    }
+
     override fun get(index: Int): E {
         validateIndex(index)
         return elementData(index)
