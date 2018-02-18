@@ -1,11 +1,11 @@
 package org.firas.collection.list
 
-import org.firas.collection.Iterator
+import kotlin.collections.Iterator
 
 /**
  *
  */
-class CircularLinkedList<E: Any?> private constructor(
+class CircularLinkedList<E> private constructor(
         head: LinkedListNode<E>?): AbstractLinkedList<E>(head) {
 
     constructor(): this(null)

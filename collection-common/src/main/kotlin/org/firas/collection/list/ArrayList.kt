@@ -1,6 +1,7 @@
 package org.firas.collection.list
 
-import org.firas.collection.Iterator
+import org.firas.collection.range.IntegerRange
+import kotlin.collections.Iterator
 
 /**
  *
@@ -8,7 +9,6 @@ import org.firas.collection.Iterator
 class ArrayList<E>(initialCapacity: Int = 10):
         AbstractList<E>(), org.firas.collection.stack.Stack<E> {
 
-    private var capacity: Int = initialCapacity
     private var size: Int = 0
     private var array = arrayOfNulls<Any>(initialCapacity)
 
@@ -30,6 +30,20 @@ class ArrayList<E>(initialCapacity: Int = 10):
         return false
     }
 
+    override fun indexOf(element: E): Int {
+        return IntegerRange(size - 1).firstOrNull {
+            null == element && null == array[it] ||
+                    null != element && element == array[it]
+        } ?: -1
+    }
+
+    override fun lastIndexOf(element: E): Int {
+        return IntegerRange(size - 1, 0, -1).firstOrNull {
+            null == element && null == array[it] ||
+                    null != element && element == array[it]
+        } ?: -1
+    }
+
     override fun get(index: Int): E {
         validateIndex(index)
         return elementData(index)
@@ -48,13 +62,13 @@ class ArrayList<E>(initialCapacity: Int = 10):
     }
 
     override fun push(element: E) {
-        append(element);
+        append(element)
     }
 
     override fun pop(): E {
         modifyCount += 1
         size -= 1
-        return array[size]
+        return elementData(size)
     }
 
     override fun insert(index: Int, element: E) {
@@ -90,7 +104,7 @@ class ArrayList<E>(initialCapacity: Int = 10):
         return ArrayListIterator()
     }
 
-    private inner open class ArrayListIterator : AbstractListIterator() {
+    private open inner class ArrayListIterator : AbstractListIterator() {
         var cursor = 0
 
         override fun hasNext(): Boolean {

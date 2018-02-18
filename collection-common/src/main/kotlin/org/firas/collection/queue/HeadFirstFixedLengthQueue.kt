@@ -3,7 +3,8 @@ package org.firas.collection.queue
 /**
  *
  */
-class HeadFirstFixedLengthQueue<E: Any?>(length: Int) : AbstractFixedLengthQueueWithSize<E>(length) {
+class HeadFirstFixedLengthQueue<E>(length: Int):
+        AbstractFixedLengthQueueWithSize<E>(length) {
 
     override fun produce(element: E) {
         checkFull()

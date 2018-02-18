@@ -3,7 +3,7 @@ package org.firas.collection.stack
 /**
  *
  */
-class FixedLengthStack<E: Any?>(length: Int) : Stack<E> {
+class FixedLengthStack<E>(length: Int) : Stack<E> {
 
     private val array = arrayOfNulls<Any>(length)
     private var size = 0

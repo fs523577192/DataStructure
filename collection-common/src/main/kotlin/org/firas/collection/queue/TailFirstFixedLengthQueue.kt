@@ -3,7 +3,7 @@ package org.firas.collection.queue
 /**
  *
  */
-class TailFirstFixedLengthQueue<E: Any?>(length: Int):
+class TailFirstFixedLengthQueue<E>(length: Int):
         AbstractFixedLengthQueueWithSize<E>(length) {
 
     override fun produce(element: E) {

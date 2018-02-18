@@ -1,6 +1,6 @@
 package org.firas.collection.queue
 
-abstract class AbstractFixedLengthQueueWithSize<E: Any?>(length: Int):
+abstract class AbstractFixedLengthQueueWithSize<E>(length: Int):
         FixedLengthQueue<E>(length) {
 
     protected var _size = 0

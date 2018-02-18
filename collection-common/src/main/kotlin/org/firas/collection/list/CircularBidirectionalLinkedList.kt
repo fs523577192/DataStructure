@@ -1,11 +1,11 @@
 package org.firas.collection.list
 
-import org.firas.collection.Iterator
+import kotlin.collections.Iterator
 
 /**
  *
  */
-class CircularBidirectionalLinkedList<E: Any?> private constructor(
+class CircularBidirectionalLinkedList<E> private constructor(
         head: BidirectionalLinkedListNode<E>?) :
         AbstractBidirectionalLinkedList<E>(head),
         org.firas.collection.queue.Queue<E> {

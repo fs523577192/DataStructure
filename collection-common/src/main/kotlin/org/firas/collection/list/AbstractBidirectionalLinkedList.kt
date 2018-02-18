@@ -3,7 +3,7 @@ package org.firas.collection.list
 /**
  *
  */
-abstract class AbstractBidirectionalLinkedList<E>
+abstract class AbstractBidirectionalLinkedList<out E>
         protected constructor(protected var head: BidirectionalLinkedListNode<E>? = null) :
         LinkedListBase<E>() {
 

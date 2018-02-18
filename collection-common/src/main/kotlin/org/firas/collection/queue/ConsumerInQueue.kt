@@ -3,7 +3,7 @@ package org.firas.collection.queue
 /**
  *
  */
-interface ConsumerInQueue<out E: Any?> {
+interface ConsumerInQueue<out E> {
 
     fun consume(): E
 }

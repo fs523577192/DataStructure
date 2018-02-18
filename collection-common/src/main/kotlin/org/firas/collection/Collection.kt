@@ -3,7 +3,7 @@ package org.firas.collection
 /**
  *
  */
-interface Collection<out E> : org.firas.collection.Iterable<E> {
+interface Collection<E>: Iterable<E> {
 
     fun size(): Int
 

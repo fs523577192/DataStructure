@@ -1,6 +1,6 @@
 package org.firas.collection.queue
 
-class FixedLengthQueueWithIndexAndSize<E: Any?>(length: Int) : AbstractFixedLengthQueueWithSize<E>(length) {
+class FixedLengthQueueWithIndexAndSize<E>(length: Int) : AbstractFixedLengthQueueWithSize<E>(length) {
 
     private var exitIndex = 0
 

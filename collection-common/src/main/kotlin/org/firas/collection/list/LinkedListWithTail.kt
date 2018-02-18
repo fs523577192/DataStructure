@@ -1,13 +1,13 @@
 package org.firas.collection.list
 
-import org.firas.collection.Iterator
+import kotlin.collections.Iterator
 
 /**
  *
  * Extra Space: n + 2
  * n "next" pointer, 1 "head" pointer, 1 "tail" pointer
  */
-class LinkedListWithTail<E: Any?> private constructor(
+class LinkedListWithTail<E> private constructor(
         head: LinkedListNode<E>?, var tail: LinkedListNode<E>? = null) :
         AbstractLinkedList<E>(head),
         org.firas.collection.stack.Stack<E>,

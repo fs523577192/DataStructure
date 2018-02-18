@@ -1,6 +1,6 @@
 package org.firas.collection.list
 
-import org.firas.collection.Iterator
+import kotlin.collections.Iterator
 
 /**
  * Uni-directional Non-circular Linked List
@@ -8,7 +8,7 @@ import org.firas.collection.Iterator
  * Extra space: n + 1
  * n "next" pointer + 1 "head" pointer
  */
-class LinkedList<E: Any?> private constructor(
+class LinkedList<E> private constructor(
         head: LinkedListNode<E>?) :
         AbstractLinkedList<E>(head) {
 
@@ -99,7 +99,7 @@ class LinkedList<E: Any?> private constructor(
         return LinkedListIterator()
     }
 
-    private inner open class LinkedListIterator(
+    private open inner class LinkedListIterator(
             var currentNode: LinkedListNode<E>? = head): AbstractListIterator() {
 
         override fun hasNext(): Boolean {

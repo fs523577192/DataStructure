@@ -1,13 +1,13 @@
 package org.firas.collection.list
 
-import org.firas.collection.Iterator
+import kotlin.collections.Iterator
 
 /**
  *
  */
 abstract class AbstractList<E> : MutableList<E> {
 
-    protected inner abstract class AbstractListIterator : Iterator<E> {
+    protected abstract inner class AbstractListIterator : Iterator<E> {
         val expectedModifyCount = modifyCount
 
         protected fun checkForComodification() {

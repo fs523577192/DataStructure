@@ -1,6 +1,7 @@
 package org.firas.collection.queue
 
-class FixedLengthQueueWithIndex<E>(length: Int) : AbstractFixedLengthQueueWithIndex<E>(length) {
+class FixedLengthQueueWithIndex<E>(length: Int):
+        AbstractFixedLengthQueueWithIndex<E>(length) {
 
     override fun size(): Int {
         if (exitIndex < 0) {

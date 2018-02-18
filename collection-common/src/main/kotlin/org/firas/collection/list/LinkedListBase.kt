@@ -5,18 +5,30 @@ import org.firas.collection.stack.Stack
 /**
  *
  */
-abstract class LinkedListBase<E: Any?> : AbstractList<E>(), Stack<E> {
+abstract class LinkedListBase<E> : AbstractList<E>(), Stack<E> {
 
-    protected abstract class LinkedListNodeBase<E, T: LinkedListNodeBase<E, T>>(var next: T?)
+    protected abstract class LinkedListNodeBase<E, T: LinkedListNodeBase<E, T>>(
+            var next: T?) {
+        abstract fun getElement(): E
+    }
 
     protected class LinkedListNode<E>(next: LinkedListNode<E>?, var element: E) :
-            LinkedListNodeBase<E, LinkedListNode<E>>(next)
+            LinkedListNodeBase<E, LinkedListNode<E>>(next) {
+
+        override fun getElement(): E {
+            return element
+        }
+    }
 
     protected class BidirectionalLinkedListNode<E>(
             next: BidirectionalLinkedListNode<E>?,
             var prev: BidirectionalLinkedListNode<E>?,
             var element: E) :
             LinkedListNodeBase<E, BidirectionalLinkedListNode<E>>(next) {
+
+        override fun getElement(): E {
+            return element
+        }
 
         fun afterInsert(): BidirectionalLinkedListNode<E> {
             if (null != next) {
@@ -30,13 +42,15 @@ abstract class LinkedListBase<E: Any?> : AbstractList<E>(), Stack<E> {
     }
 
     protected fun <T: LinkedListNodeBase<E, T>> contains(
-            head: LinkedListNodeBase<E, T>?, element: E): Int {
+            head: LinkedListNodeBase<E, T>?, element: E): Boolean {
         var node = head
-        while (null != node) {
-            if (null == element && null == node.element ||
-                    null != element && element.equals(node.element)) {
+        while (true) {
+            val temp = node ?: break
+            if (null == element && null == temp.getElement() ||
+                    null != element && element == temp.getElement()) {
                 return true
             }
+            node = temp.next
         }
         return false
     }
@@ -44,28 +58,30 @@ abstract class LinkedListBase<E: Any?> : AbstractList<E>(), Stack<E> {
     protected fun <T: LinkedListNodeBase<E, T>> size(head: LinkedListNodeBase<E, T>?): Int {
         var result = 0
         var node = head
-        while (null != node) {
+        while (true) {
+            val temp = node ?: break
             result += 1
-            node = node.next
+            node = temp.next
         }
         return result
     }
 
     protected fun <T: LinkedListNodeBase<E, T>> containsForCircular(
-            head: LinkedListNodeBase<E, T>?, element: E): Int {
+            head: LinkedListNodeBase<E, T>?, element: E): Boolean {
         if (null == head) {
             return false
         }
-        if (null == element && null == head.element ||
-                null != element && element.equals(head.element)) {
+        if (null == element && null == head.getElement() ||
+                null != element && element == head.getElement()) {
             return true
         }
         var node = head.next
         while (head != node) {
-            if (null == element && null == node.element ||
-                    null != element && element.equals(node.element)) {
+            if (null == element && null == node?.getElement() ||
+                    null != element && element == node?.getElement()) {
                 return true
             }
+            node = node?.next
         }
         return false
     }

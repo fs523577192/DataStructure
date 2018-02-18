@@ -1,6 +1,6 @@
 package org.firas.collection.queue
 
-abstract class FixedLengthQueue<E: Any?>(length: Int) : Queue<E> {
+abstract class FixedLengthQueue<E>(length: Int) : Queue<E> {
 
     protected val array = arrayOfNulls<Any>(length)
 

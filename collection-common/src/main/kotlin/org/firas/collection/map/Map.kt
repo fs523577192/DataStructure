@@ -1,6 +1,6 @@
 package org.firas.collection.map
 
-interface Map<K, V> {
+interface Map<in K, out V> {
 
     fun get(key: K): V
 
