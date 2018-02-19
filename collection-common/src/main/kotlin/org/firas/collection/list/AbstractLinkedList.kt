@@ -12,11 +12,11 @@ abstract class AbstractLinkedList<E>
     }
 
     override fun get(index: Int): E {
-        return getNodeByIndex(head, index).element
+        return getNodeByIndex(head, index).getElement()
     }
 
     override fun set(index: Int, element: E) {
         modifyCount += 1
-        getNodeByIndex(head, index).element = element
+        getNodeByIndex(head, index).setElement(element)
     }
 }

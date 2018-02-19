@@ -12,159 +12,48 @@ class ListTest {
         assertEquals(1, list.size(), "The size of the list is not 1")
         try {
             list.get(0)
-            true
         } catch (e: Exception) {
-            false
+            fail("Fail to get the first element")
         }
-        try {
-            list.get(1)
-            false
-        } catch (e: IndexOutOfBoundsException) {
-            true
-        } catch (e: Exception) {
-            false
-        }
-        try {
-            list.get(2)
-            false
-        } catch (e: IndexOutOfBoundsException) {
-            true
-        } catch (e: Exception) {
-            false
-        }
+        assertFailsWith(IndexOutOfBoundsException::class, {list.get(1)})
+        assertFailsWith(IndexOutOfBoundsException::class, {list.get(2)})
     }
 
     fun <E> testMutableListWithOneElement(list: MutableList<E>, element: E) {
         try {
             list.set(0, element)
-            true
         } catch (e: Exception) {
-            false
+            fail("Fail to set the first element")
         }
-        try {
-            list.set(1, element)
-            false
-        } catch (e: IndexOutOfBoundsException) {
-            true
-        } catch (e: Exception) {
-            false
-        }
-        try {
-            list.set(2, element)
-            false
-        } catch (e: IndexOutOfBoundsException) {
-            true
-        } catch (e: Exception) {
-            false
-        }
+        assertEquals(element, list.get(0), "The element got is not the same as the element set")
 
-        try {
-            list.insert(2, element)
-            false
-        } catch (e: IndexOutOfBoundsException) {
-            true
-        } catch (e: Exception) {
-            false
-        }
-        try {
-            list.insert(3, element)
-            false
-        } catch (e: IndexOutOfBoundsException) {
-            true
-        } catch (e: Exception) {
-            false
-        }
+        assertFailsWith(IndexOutOfBoundsException::class, {list.set(1, element)})
+        assertFailsWith(IndexOutOfBoundsException::class, {list.set(2, element)})
 
-        try {
-            list.remove(1)
-            false
-        } catch (e: NoSuchElementException) {
-            true
-        } catch (e: Exception) {
-            false
-        }
-        try {
-            list.remove(2)
-            false
-        } catch (e: NoSuchElementException) {
-            true
-        } catch (e: Exception) {
-            false
-        }
+        assertFailsWith(IndexOutOfBoundsException::class, {list.insert(2, element)})
+        assertFailsWith(IndexOutOfBoundsException::class, {list.insert(3, element)})
+
+        assertFailsWith(IndexOutOfBoundsException::class, {list.remove(1)})
+        assertFailsWith(IndexOutOfBoundsException::class, {list.remove(2)})
     }
 
     fun <E> testEmptyList(newList: List<E>) {
         assertTrue(newList.isEmpty(), "The list is not empty")
-        assertEquals(0, newList.size(), The size of the list is not 0")
-        try {
-            newList.get(0)
-            false
-        } catch (e: IndexOutOfBoundsException) {
-            true
-        } catch (e: Exception) {
-            false
-        }
-        try {
-            newList.get(1)
-            false
-        } catch (e: IndexOutOfBoundsException) {
-            true
-        } catch (e: Exception) {
-            false
-        }
+        assertEquals(0, newList.size(), "The size of the list is not 0")
+
+        assertFailsWith(IndexOutOfBoundsException::class, {newList.get(0)})
+        assertFailsWith(IndexOutOfBoundsException::class, {newList.get(1)})
     }
 
     fun <E> testEmptyMutableList(newList: MutableList<E>, element: E) {
-        try {
-            newList.set(0, element)
-            false
-        } catch (e: IndexOutOfBoundsException) {
-            true
-        } catch (e: Exception) {
-            false
-        }
-        try {
-            newList.set(1, element)
-            false
-        } catch (e: IndexOutOfBoundsException) {
-            true
-        } catch (e: Exception) {
-            false
-        }
+        assertFailsWith(IndexOutOfBoundsException::class, {newList.set(0, element)})
+        assertFailsWith(IndexOutOfBoundsException::class, {newList.set(1, element)})
 
-        try {
-            newList.insert(1, element)
-            false
-        } catch (e: IndexOutOfBoundsException) {
-            true
-        } catch (e: Exception) {
-            false
-        }
-        try {
-            newList.insert(2, element)
-            false
-        } catch (e: IndexOutOfBoundsException) {
-            true
-        } catch (e: Exception) {
-            false
-        }
+        assertFailsWith(IndexOutOfBoundsException::class, {newList.insert(1, element)})
+        assertFailsWith(IndexOutOfBoundsException::class, {newList.insert(2, element)})
 
-        try {
-            newList.remove(0)
-            false
-        } catch (e: NoSuchElementException) {
-            true
-        } catch (e: Exception) {
-            false
-        }
-        try {
-            newList.remove(1)
-            false
-        } catch (e: NoSuchElementException) {
-            true
-        } catch (e: Exception) {
-            false
-        }
+        assertFailsWith(IndexOutOfBoundsException::class, {newList.remove(0)})
+        assertFailsWith(IndexOutOfBoundsException::class, {newList.remove(1)})
     }
 
     fun testList(list: MutableList<Int>) {
@@ -194,12 +83,15 @@ class ListTest {
         testMutableListWithOneElement(list, 0)
     }
 
-    fun testArrayList() {
-
-    }
-
     @Test
     fun test() {
+        testList(ArrayList())
+        testList(ArrayList(1))
 
+        testList(LinkedList())
+        testList(LinkedListWithTail())
+        testList(BidirectionalLinkedList())
+        testList(CircularLinkedList())
+        testList(CircularBidirectionalLinkedList())
     }
 }

@@ -2,7 +2,11 @@ package org.firas.collection
 
 interface MutableSortedCollection<E: Comparable<E>>: SortedCollection<E> {
 
-    fun add(element: E)
+    /**
+     * @return true  if the element is added successfully
+     *          false otherwise
+     */
+    fun add(element: E): Boolean
 
     /**
      * @return false if there is no item equal to "element" in the sorted collection

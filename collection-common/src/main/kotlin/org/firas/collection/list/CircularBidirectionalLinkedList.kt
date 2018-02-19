@@ -20,12 +20,21 @@ class CircularBidirectionalLinkedList<E> private constructor(
         return containsForCircular(head, element)
     }
 
-    override fun indexOf(element: E) {
+    override fun indexOf(element: E): Int {
         return indexOfForCircular(head, element)
     }
 
-    override fun lastIndexOf(element: E) {
+    override fun lastIndexOf(element: E): Int {
         return lastIndexOfForCircular(head, element)
+    }
+
+    override fun get(index: Int): E {
+        return getNodeByIndexForCircular(head, index).getElement()
+    }
+
+    override fun set(index: Int, element: E) {
+        modifyCount += 1
+        getNodeByIndexForCircular(head, index).setElement(element)
     }
 
     override fun push(element: E) {
@@ -43,13 +52,15 @@ class CircularBidirectionalLinkedList<E> private constructor(
 
     override fun produce(element: E) {
         modifyCount += 1
-        if (null == head) {
-            head = BidirectionalLinkedListNode(null, null, element)
-            head?.next = this.head
-            head?.prev = this.head
+        val temp = head
+        if (null == temp) {
+            val newHead = BidirectionalLinkedListNode(null, null, element)
+            newHead.next = temp
+            newHead.prev = temp
+            head = newHead
         } else {
-            head?.prev = BidirectionalLinkedListNode(
-                    head, head.prev, element).afterInsert()
+            temp.prev = BidirectionalLinkedListNode(
+                    temp, temp.prev, element).afterInsert()
         }
     }
 
@@ -82,19 +93,23 @@ class CircularBidirectionalLinkedList<E> private constructor(
     override fun remove(index: Int): E {
         ensureNonNegativeIndex(index)
         if (0 == index) {
-            return pop()
+            try {
+                return pop()
+            } catch (ex: NoSuchElementException) {
+                throw IndexOutOfBoundsException()
+            }
         }
         val node = getNodeByIndexForCircular(head, index)
         modifyCount += 1
         node.prev?.next = node.next
         node.next?.prev = node.prev
-        return node.element
+        return node.getElement()
     }
 
     override fun pop(): E {
         ensureNotEmpty(head)
         modifyCount += 1
-        val result = (head?.element as E)
+        val result = (head?.getElement() as E)
         if (head == head?.next) {
             head = null
             return result
@@ -129,7 +144,7 @@ class CircularBidirectionalLinkedList<E> private constructor(
 
         override fun next(): E {
             checkForComodification()
-            val result = (currentNode?.element as E)
+            val result = (currentNode?.getElement() as E)
             currentNode = currentNode?.next
             return result
         }

@@ -13,7 +13,7 @@ class LinkedListWithTail<E> private constructor(
         org.firas.collection.stack.Stack<E>,
         org.firas.collection.queue.Queue<E> {
 
-    LinkedListWithTail(): this(null)
+    constructor(): this(null)
 
     override fun size(): Int {
         return size(head)
@@ -23,11 +23,11 @@ class LinkedListWithTail<E> private constructor(
         return contains(head, element)
     }
 
-    override fun indexOf(element: E): Boolean {
+    override fun indexOf(element: E): Int {
         return indexOf(head, element)
     }
 
-    override fun lastIndexOf(element: E): Boolean {
+    override fun lastIndexOf(element: E): Int {
         return lastIndexOf(head, element)
     }
 
@@ -76,7 +76,11 @@ class LinkedListWithTail<E> private constructor(
     override fun remove(index: Int): E {
         ensureNonNegativeIndex(index)
         if (0 == index) {
-            return pop()
+            try {
+                return pop()
+            } catch (ex: NoSuchElementException) {
+                throw IndexOutOfBoundsException()
+            }
         }
         val prev = getNodeByIndex(head, index - 1)
         val node = prev.next ?: throw IndexOutOfBoundsException()
@@ -85,7 +89,7 @@ class LinkedListWithTail<E> private constructor(
         if (null == prev.next) {
             tail = prev
         }
-        return node.element
+        return node.getElement()
     }
 
     /**
@@ -94,7 +98,7 @@ class LinkedListWithTail<E> private constructor(
     override fun pop(): E {
         ensureNotEmpty(head)
         modifyCount += 1
-        val result = (head?.element as E)
+        val result = (head?.getElement() as E)
         head = head?.next
         if (null == head) {
             tail = null
@@ -123,7 +127,7 @@ class LinkedListWithTail<E> private constructor(
 
         override fun next(): E {
             checkForComodification()
-            val result = (currentNode?.element as E)
+            val result = (currentNode?.getElement() as E)
             currentNode = currentNode?.next
             return result
         }

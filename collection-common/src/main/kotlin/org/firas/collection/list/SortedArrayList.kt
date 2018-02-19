@@ -115,7 +115,7 @@ class SortedArrayList<E: Comparable<E>>(initialCapacity: Int = 10):
         return elementData(index - 1)
     }
 
-    override fun add(element: E) {
+    override fun add(element: E): Boolean {
         val index = countNotLessThan(element)
         ensureCapacity(size + 1)
         var i = size
@@ -124,6 +124,7 @@ class SortedArrayList<E: Comparable<E>>(initialCapacity: Int = 10):
             i -= 1
         }
         array[index] = element
+        return true
     }
 
     override fun remove(element: E): Boolean {
@@ -168,6 +169,36 @@ class SortedArrayList<E: Comparable<E>>(initialCapacity: Int = 10):
         }
         if (n > size) {
             throw NoSuchElementException("There are/is less than $n element(s) in the sorted collection")
+        }
+    }
+
+    override fun iterator(): Iterator<E> {
+        return SortedArrayListIterator()
+    }
+
+    private inner class SortedArrayListIterator: Iterator<E> {
+        var cursor = 0
+        val expectedModifyCount = modifyCount
+
+        private fun checkForComodification() {
+            if (modifyCount != expectedModifyCount) {
+                throw Exception("Concurrent modification")
+            }
+        }
+
+        override fun hasNext(): Boolean {
+            checkForComodification()
+            return cursor < size
+        }
+
+        override fun next(): E {
+            checkForComodification()
+            val index = cursor
+            cursor += 1
+            if (index >= size) {
+                throw Exception("No such element")
+            }
+            return elementData(index)
         }
     }
 

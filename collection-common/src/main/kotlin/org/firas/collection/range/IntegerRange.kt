@@ -1,5 +1,8 @@
 package org.firas.collection.range
 
+import kotlin.math.max
+import kotlin.math.min
+
 class IntegerRange(
         private val beginValue: Int,
         private val endValue: Int,
@@ -23,8 +26,10 @@ class IntegerRange(
     }
 
     override fun contains(element: Int): Boolean {
-        return element in beginValue..endValue
-                && ((element - beginValue) % step == 0)
+        return (step > 0 && element in beginValue..endValue
+                && ((element - beginValue) % step == 0))
+                || (step < 0 && element in endValue..beginValue
+                && ((beginValue - element) % -step == 0))
     }
 
     override fun iterator(): Iterator<Int> {
@@ -39,7 +44,7 @@ class IntegerRange(
             }
             // beginValue > other
             val min = if (endValue > other) endValue else (other + 1)
-            return (beginValue - min) / step + 1
+            return (beginValue - min) / -step + 1
         }
 
         // step > 0, beginValue is the minimum
@@ -81,7 +86,7 @@ class IntegerRange(
             }
             // beginValue >= other
             val min = if (endValue >= other) endValue else other
-            return (beginValue - min) / step + 1
+            return (beginValue - min) / -step + 1
         }
 
         // step > 0, beginValue is the minimum
@@ -101,8 +106,7 @@ class IntegerRange(
                 throw NoSuchElementException("No element is not less than $other")
             }
             // beginValue >= other
-            val min = if (endValue >= other) endValue else other
-            return beginValue + (min - beginValue) / step * step
+            return beginValue + (max(endValue, other) - beginValue) / step * step
         }
 
         // step > 0, beginValue is the minimum
@@ -111,8 +115,7 @@ class IntegerRange(
             throw NoSuchElementException("No element is not less than $other")
         }
         // max >= other
-        val min = if (beginValue >= other) beginValue else other
-        return beginValue + (max - min) / step * step
+        return beginValue + (max - max(beginValue, other)) / step * step
     }
 
     override fun countLessThan(other: Int): Int {
@@ -133,7 +136,7 @@ class IntegerRange(
         }
         // min < other
         val max = if (beginValue < other) beginValue else (other - 1)
-        return (max - min) / step + 1
+        return (max - min) / -step + 1
     }
 
     override fun greatestThatLessThan(other: Int): Int {
@@ -164,8 +167,7 @@ class IntegerRange(
                 return 0
             }
             // beginValue <= other
-            val max = if (endValue >= other) endValue else other
-            return (max - beginValue) / step + 1
+            return (min(endValue, other) - beginValue) / step + 1
         }
 
         // step < 0, beginValue is the maximum
@@ -174,8 +176,7 @@ class IntegerRange(
             return 0
         }
         // min <= other
-        val max = if (beginValue >= other) beginValue else other
-        return (max - min) / -step + 1
+        return (min(beginValue, other) - min) / -step + 1
     }
 
     override fun greatestThatNotGreaterThan(other: Int): Int {
@@ -185,8 +186,7 @@ class IntegerRange(
                 throw NoSuchElementException("No element is not greater than $other")
             }
             // beginValue <= other
-            val max = if (endValue >= other) endValue else other
-            return beginValue + (max - beginValue) / step * step
+            return beginValue + (min(endValue, other) - beginValue) / step * step
         }
 
         // step < 0, beginValue is the maximum
@@ -195,8 +195,7 @@ class IntegerRange(
             throw NoSuchElementException("No element is not greater than $other")
         }
         // min <= other
-        val max = if (beginValue >= other) beginValue else other
-        return beginValue + (max - min) / -step * step
+        return beginValue + (min(beginValue, other) - min) / -step * step
     }
 
     override fun nthLeast(n: Int): Int {

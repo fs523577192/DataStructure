@@ -7,7 +7,7 @@ class IntegerRangeTest {
     @Test
     fun test() {
         test01Common(IntegerRange(1))
-        test01Common(IntegerRange(-1, -1))
+        test01Common(IntegerRange(1, 0, -1))
 
         test024Common(IntegerRange(4, 2))
         test024Common(IntegerRange(5, 2))

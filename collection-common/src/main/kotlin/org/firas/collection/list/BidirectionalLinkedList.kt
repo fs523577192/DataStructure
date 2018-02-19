@@ -19,11 +19,11 @@ class BidirectionalLinkedList<E> private constructor(
         return contains(head, element)
     }
 
-    override fun indexOf(element: E) {
+    override fun indexOf(element: E): Int {
         return indexOf(head, element)
     }
 
-    override fun lastIndexOf(element: E) {
+    override fun lastIndexOf(element: E): Int {
         return lastIndexOf(head, element)
     }
 
@@ -68,11 +68,15 @@ class BidirectionalLinkedList<E> private constructor(
     override fun remove(index: Int): E {
         ensureNonNegativeIndex(index)
         if (0 == index) {
-            return pop()
+            try {
+                return pop()
+            } catch (ex: NoSuchElementException) {
+                throw IndexOutOfBoundsException()
+            }
         }
         val node = getNodeByIndex(head, index)
         modifyCount += 1
-        val result = node.element
+        val result = node.getElement()
         if (null != node.prev) {
             node.prev?.next = node.next
         }
@@ -85,7 +89,7 @@ class BidirectionalLinkedList<E> private constructor(
     override fun pop(): E {
         ensureNotEmpty(head)
         modifyCount += 1
-        val result = (head?.element as E)
+        val result = (head?.getElement() as E)
         head = head?.next
         if (null != head) {
             head?.prev = null
@@ -108,7 +112,7 @@ class BidirectionalLinkedList<E> private constructor(
 
         override fun next(): E {
             checkForComodification()
-            val result = (currentNode?.element as E)
+            val result = (currentNode?.getElement() as E)
             currentNode = currentNode?.next
             return result
         }

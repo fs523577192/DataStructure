@@ -12,22 +12,30 @@ abstract class LinkedListBase<E> : AbstractList<E>(), Stack<E> {
         abstract fun getElement(): E
     }
 
-    protected class LinkedListNode<E>(next: LinkedListNode<E>?, var element: E) :
+    protected class LinkedListNode<E>(next: LinkedListNode<E>?, private var element: E) :
             LinkedListNodeBase<E, LinkedListNode<E>>(next) {
 
         override fun getElement(): E {
             return element
+        }
+
+        fun setElement(element: E) {
+            this.element = element
         }
     }
 
     protected class BidirectionalLinkedListNode<E>(
             next: BidirectionalLinkedListNode<E>?,
             var prev: BidirectionalLinkedListNode<E>?,
-            var element: E) :
+            private var element: E) :
             LinkedListNodeBase<E, BidirectionalLinkedListNode<E>>(next) {
 
         override fun getElement(): E {
             return element
+        }
+
+        fun setElement(element: E) {
+            this.element = element
         }
 
         fun afterInsert(): BidirectionalLinkedListNode<E> {

@@ -73,6 +73,9 @@ class ArrayList<E>(initialCapacity: Int = 10):
 
     override fun insert(index: Int, element: E) {
         ensureNonNegativeIndex(index)
+        if (index > size) {
+            throw IndexOutOfBoundsException()
+        }
         ensureCapacity(size + 1)
         var i = size
         var j = size - 1
