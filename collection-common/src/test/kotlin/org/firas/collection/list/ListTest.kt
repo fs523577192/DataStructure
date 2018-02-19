@@ -1,6 +1,6 @@
 package org.firas.collection.list
 
-import kotlin.test.Test
+import kotlin.test.*
 
 /**
  *
@@ -8,8 +8,8 @@ import kotlin.test.Test
 class ListTest {
 
     fun <E> testListWithOneElement(list: List<E>) {
-        !list.isEmpty()
-        list.size() == 1
+        assertFalse(list.isEmpty(), "The list is empty")
+        assertEquals(1, list.size(), "The size of the list is not 1")
         try {
             list.get(0)
             true
@@ -94,8 +94,8 @@ class ListTest {
     }
 
     fun <E> testEmptyList(newList: List<E>) {
-        newList.isEmpty()
-        newList.size() == 0
+        assertTrue(newList.isEmpty(), "The list is not empty")
+        assertEquals(0, newList.size(), The size of the list is not 0")
         try {
             newList.get(0)
             false
