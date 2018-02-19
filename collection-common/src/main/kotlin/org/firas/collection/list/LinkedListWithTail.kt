@@ -23,6 +23,14 @@ class LinkedListWithTail<E> private constructor(
         return contains(head, element)
     }
 
+    override fun indexOf(element: E): Boolean {
+        return indexOf(head, element)
+    }
+
+    override fun lastIndexOf(element: E): Boolean {
+        return lastIndexOf(head, element)
+    }
+
     override fun push(element: E) {
         modifyCount += 1
         head = LinkedListNode(head, element)

@@ -22,6 +22,14 @@ class LinkedList<E> private constructor(
         return contains(head, element)
     }
 
+    override fun indexOf(element: E) {
+        return indexOf(head, element)
+    }
+
+    override fun lastIndexOf(element: E) {
+        return lastIndexOf(head, element)
+    }
+
     /**
      * Push an element into the stack
      * Insert the element before the original head

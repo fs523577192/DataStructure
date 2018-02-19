@@ -66,6 +66,39 @@ abstract class LinkedListBase<E> : AbstractList<E>(), Stack<E> {
         return result
     }
 
+    protected fun <T: LinkedListNodeBase<E, T>> indexOf(
+            head: LinkedListNodeBase<E, T>?, element: E): Int {
+        var result = 0
+        var node = head
+        while (true) {
+            val temp = node ?: break
+            if (null == element && null == temp.getElement() ||
+                    null != element && element == temp.getElement()) {
+                return result
+            }
+            result += 1
+            node = temp.next
+        }
+        return -1
+    }
+
+    protected fun <T: LinkedListNodeBase<E, T>> lastIndexOf(
+            head: LinkedListNodeBase<E, T>?, element: E): Int {
+        var result = -1
+        var index = 0
+        var node = head
+        while (true) {
+            val temp = node ?: break
+            if (null == element && null == temp.getElement() ||
+                    null != element && element == temp.getElement()) {
+                result = index
+            }
+            index += 1
+            node = temp.next
+        }
+        return result
+    }
+
     protected fun <T: LinkedListNodeBase<E, T>> containsForCircular(
             head: LinkedListNodeBase<E, T>?, element: E): Boolean {
         if (null == head) {
@@ -86,7 +119,8 @@ abstract class LinkedListBase<E> : AbstractList<E>(), Stack<E> {
         return false
     }
 
-    protected fun <T: LinkedListNodeBase<E, T>> sizeForCircular(head: LinkedListNodeBase<E, T>?): Int {
+    protected fun <T: LinkedListNodeBase<E, T>> sizeForCircular(
+            head: LinkedListNodeBase<E, T>?): Int {
         if (null == head) {
             return 0
         }
@@ -94,6 +128,53 @@ abstract class LinkedListBase<E> : AbstractList<E>(), Stack<E> {
         var node = head.next
         while (head != node) {
             result += 1
+            node = node?.next
+        }
+        return result
+    }
+
+    protected fun <T: LinkedListNodeBase<E, T>> indexOfForCircular(
+            head: LinkedListNodeBase<E, T>?, element: E): Int {
+        if (null == head) {
+            return -1
+        }
+        if (null == element && null == head.getElement() ||
+                null != element && element == head.getElement()) {
+            return 0
+        }
+        var result = 1
+        var node = head.next
+        while (head != node) {
+            if (null == element && null == node?.getElement() ||
+                    null != element && element == node?.getElement()) {
+                return result
+            }
+            result += 1
+            node = node?.next
+        }
+        return -1
+    }
+
+    protected fun <T: LinkedListNodeBase<E, T>> lastIndexOfForCircular(
+            head: LinkedListNodeBase<E, T>?, element: E): Int {
+        if (null == head) {
+            return -1
+        }
+
+        var result = -1
+        if (null == element && null == head.getElement() ||
+                null != element && element == head.getElement()) {
+            result = 0
+        }
+
+        var index = 1
+        var node = head.next
+        while (head != node) {
+            if (null == element && null == node?.getElement() ||
+                    null != element && element == node?.getElement()) {
+                result = index
+            }
+            index += 1
             node = node?.next
         }
         return result

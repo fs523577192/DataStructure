@@ -18,6 +18,14 @@ class CircularLinkedList<E> private constructor(
         return containsForCircular(head, element)
     }
 
+    override fun indexOf(element: E) {
+        return indexOfForCircular(head, element)
+    }
+
+    override fun lastIndexOf(element: E) {
+        return lastIndexOfForCircular(head, element)
+    }
+
     override fun push(element: E) {
         modifyCount += 1
         val original = head

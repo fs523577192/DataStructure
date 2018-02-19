@@ -19,6 +19,14 @@ class BidirectionalLinkedList<E> private constructor(
         return contains(head, element)
     }
 
+    override fun indexOf(element: E) {
+        return indexOf(head, element)
+    }
+
+    override fun lastIndexOf(element: E) {
+        return lastIndexOf(head, element)
+    }
+
     override fun push(element: E) {
         modifyCount += 1
         head = BidirectionalLinkedListNode(head, null, element)
